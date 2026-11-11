@@ -12,13 +12,16 @@ jobs:
         run: |
           git clone --recursive https://github.com/theos/theos.git $HOME/theos
           echo "THEOS=$HOME/theos" >> $GITHUB_ENV
+          echo "THEOS_MAKE_PATH=$HOME/theos/makefiles" >> $GITHUB_ENV
 
       - name: Install ldid
         run: brew install ldid
 
       - name: Build Dylib
         run: |
+          # Garante que a variável está no ambiente do step
           export THEOS=$HOME/theos
+          export THEOS_MAKE_PATH=$HOME/theos/makefiles
           export TARGET_CODESIGN=$(which ldid)
           make FINALPACKAGE=1
 
