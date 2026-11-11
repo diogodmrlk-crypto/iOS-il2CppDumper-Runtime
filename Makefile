@@ -1,4 +1,4 @@
-# Theos path: usa a variável de ambiente, com fallback pro GitHub Actions
+# Theos path
 THEOS ?= /opt/theos
 THEOS_MAKE_PATH = $(THEOS)/makefiles
 
@@ -19,9 +19,10 @@ $(TWEAK_NAME)_FILES = src/Tweak.mm src/AlertUtils.mm \
 $(wildcard src/Core/*.cpp) \
 $(wildcard includes/SSZipArchive/SSZipArchive.m) $(wildcard includes/SSZipArchive/minizip/*.c)
 
-$(TWEAK_NAME)_CFLAGS = -fobjc-arc $(ZIP_ARCHIVE_DEFINES) -Wno-deprecated-declarations
+# Adicionado -Wno-deprecated-literal-operator para o json.hpp não quebrar o build
+$(TWEAK_NAME)_CFLAGS = -fobjc-arc $(ZIP_ARCHIVE_DEFINES) -Wno-deprecated-declarations -Wno-deprecated-literal-operator
 
-$(TWEAK_NAME)_CCFLAGS = -std=c++11 -Iincludes -O2 -DkNO_KEYSTONE
+$(TWEAK_NAME)_CCFLAGS = -std=c++11 -Iincludes -O2 -DkNO_KEYSTONE -Wno-deprecated-literal-operator
 
 $(TWEAK_NAME)_LDFLAGS = -lz -liconv -ldl
 
